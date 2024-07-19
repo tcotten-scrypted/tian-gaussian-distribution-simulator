@@ -42,12 +42,21 @@ def generate_bitfield(seed, size):
     """
     Generate bitfield of given size from seed using sequential Keccak-256 hashes.
 
+    This function creates a bitfield by repeatedly hashing and concatenating the results.
+    It also keeps track of the last hash value generated.
+
     Args:
         seed (int): The seed value to start hash generation.
-        size (int): The size of the bitfield to generate.
+        size (int): The size of the bitfield to generate in bits.
 
     Returns:
-        int: The generated bitfield as an integer.
+        tuple: A tuple containing two elements:
+            - int: The generated bitfield as an integer.
+            - int: The last hash value generated in the process.
+
+    Note:
+        The function uses Keccak-256 (SHA-3) for hashing, which produces 256-bit hashes.
+        If the requested size is larger than 256 bits, multiple hashes are concatenated.
     """
     data = seed.to_bytes(32, 'big')
     bitfield = 0
